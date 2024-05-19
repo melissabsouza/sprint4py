@@ -3,9 +3,9 @@ import json
 
 def export_json(dados, file):
     try:
-        with open(file, 'w') as f:
-            json.dump(dados, f, indent=4)
-        print(f"dados exportados para {file}")
+        with open(file, 'w', encoding='utf-8') as f:
+            json.dump(dados, f, ensure_ascii=False, indent=4)
+        print(f"Dados exportados para {file} com sucesso!")
     except IOError as e:
         print(f"Erro ao exportar dados: {e}")
 
