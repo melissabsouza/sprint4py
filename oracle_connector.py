@@ -1,6 +1,13 @@
 import oracledb
 import json
 
+def export_json(dados, file):
+    try:
+        with open(file, 'w') as f:
+            json.dump(dados, f, indent=4)
+        print(f"dados exportados para {file}")
+    except IOError as e:
+        print(f"Erro ao exportar dados: {e}")
 
 def create_oracle_connection():
     with open("credenciais.json") as f:
@@ -17,15 +24,3 @@ def create_oracle_connection():
 
     cursor = conn.cursor()
     return conn, cursor
-
-
-def read_table(cursor, table):
-    query_leitura = f"SELECT * FROM {table}"
-    result = cursor.execute(query_leitura)
-    return result.fetchall()
-
-
-def insert_table(cursor, conn, table, values, fields):
-    query = f"INSERT INTO {table} ({fields})VALUES({values})"
-    cursor.execute(query)
-    conn.commit()

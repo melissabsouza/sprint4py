@@ -1,0 +1,15 @@
+[
+    {
+        "CNPJ": 8858587874,
+        "NM_CADASTRO": "mel",
+        "SOBRENOME_CADASTRO": "souza",
+        "CARGO_CADASTRO": "analista",
+        "EMAIL_CADASTRO": "mel@mel.com",
+        "TELEFONE_CADASTRO": 11545877774,
+        "NM_EMPRESA_CADASTRO": "melinc",
+        "TAM_EMPRESA": "medio",
+        "PAIS_CADASTRO": "brasil",
+        "IDIOMA_CADASTRO": "portugues",
+        "ID_CADASTRO": 1
+    }
+]

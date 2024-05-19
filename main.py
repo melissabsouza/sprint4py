@@ -8,6 +8,7 @@ while True:
     print(f'{espacador} CRUD CONECTANDO COM BANDO DE DADOS {espacador}\n')
 
     print(
+        #O CRUD está na opção cadastrar
         "1 - Cadastrar\n"
         + "2 - Logar\n"
         + "3 - Contato\n"
@@ -22,7 +23,7 @@ while True:
         case "1":
             cadastro()
         case "2":
-            ...
+            login()
         case "3":
             contato()
         case "4":

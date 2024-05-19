@@ -1,3 +1,5 @@
+from oracle_connector import *
+
 def contato():
     print("===Você escolheu a opcão Contato!===")
     chat = input("Você deseja falar com o nosso chatbot? digite 1 para sim e 2 para não\t")
@@ -42,3 +44,34 @@ def suporte():
                 + "\tProblemas já descobertos\n"
                 + "\tDocumentação de desenvolvimento"
             )
+        
+def login():
+    while True: 
+        print("Você escolheu a opção cadastro!")
+
+        print(
+            "1 - Entrar\n"
+            +"2 - Mostrar Login por username\n"
+        )
+
+def login_simple_input():
+
+    username = input("Digite seu username: ")
+    senha = ("Digite sua senha: ")
+
+    print("Entrou no sistema!")
+
+def select_where_login(usuario_login):
+    conn, cursor = create_oracle_connection()
+    try:
+        query = "SELECT * FROM T_RDC_LOGIN WHERE usuario_login = :usuario_login"
+        cursor.execute(query, {'usuario_login': usuario_login})
+        results = cursor.fetchall()
+        columns = [col[0] for col in cursor.description]
+
+        return [dict(zip(columns, row)) for row in results]
+    except oracledb.DatabaseError as e:
+        print(f"Erro na consulta: {e}")
+    finally:
+        cursor.close()
+        conn.close()
