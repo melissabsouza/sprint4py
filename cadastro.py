@@ -18,7 +18,7 @@ def create_cadastro():
         idioma_cadastro = input("Digite seu idioma: ")
         
         query = """
-        INSERT INTO T_RDC_CADASTRO 
+        INSERT INTO TB_RDC_CADASTRO 
         (cnpj, nm_cadastro, sobrenome_cadastro, cargo_cadastro, email_cadastro, telefone_cadastro, nm_empresa_cadastro, tam_empresa, pais_cadastro, idioma_cadastro) 
         VALUES (:cnpj, :nm_cadastro, :sobrenome_cadastro, :cargo_cadastro, :email_cadastro, :telefone_cadastro, :nm_empresa_cadastro, :tam_empresa, :pais_cadastro, :idioma_cadastro)
         """
@@ -47,7 +47,7 @@ def create_cadastro():
 def read_by_email(email_cadastro):
     conn, cursor = create_oracle_connection()
     try:
-        query = "SELECT * FROM T_RDC_CADASTRO WHERE email_cadastro = :email_cadastro"
+        query = "SELECT * FROM TB_RDC_CADASTRO WHERE email_cadastro = :email_cadastro"
         cursor.execute(query, {'email_cadastro': email_cadastro})
         results = cursor.fetchall()
         columns = [col[0] for col in cursor.description]
@@ -67,7 +67,7 @@ def update_cadastro(email_cadastro, updates):
     try:
         set_clause = ', '.join([f"{key} = :{key}" for key in updates.keys()])
         updates['email_cadastro'] = email_cadastro
-        query = f"UPDATE T_RDC_CADASTRO SET {set_clause} WHERE email_cadastro = :email_cadastro"
+        query = f"UPDATE TB_RDC_CADASTRO SET {set_clause} WHERE email_cadastro = :email_cadastro"
         cursor.execute(query, updates)
         conn.commit()
         print("Atualizado!")
@@ -82,7 +82,7 @@ def delete_cadastro(email_cadastro):
     
     conn, cursor = create_oracle_connection()
     try:
-        query = "DELETE FROM T_RDC_CADASTRO WHERE email_cadastro = :email_cadastro"
+        query = "DELETE FROM TB_RDC_CADASTRO WHERE email_cadastro = :email_cadastro"
         cursor.execute(query, {'email_cadastro': email_cadastro})
         conn.commit()
     except oracledb.DatabaseError as e:
