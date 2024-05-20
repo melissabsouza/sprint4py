@@ -2,9 +2,9 @@
     {
         "ID_CADASTRO": 21,
         "CNPJ": 55555555555,
-        "NM_CADASTRO": "mel",
-        "SOBRENOME_CADASTRO": "melissa",
-        "CARGO_CADASTRO": "analista",
+        "NM_CADASTRO": "melzy",
+        "SOBRENOME_CADASTRO": "souza",
+        "CARGO_CADASTRO": "dev",
         "EMAIL_CADASTRO": "mel@gmail.com",
         "TELEFONE_CADASTRO": 11985877774,
         "NM_EMPRESA_CADASTRO": "melinc",

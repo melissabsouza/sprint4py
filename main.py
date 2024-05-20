@@ -1,7 +1,7 @@
 from defmenu import contato
 from defmenu import produtos
 from defmenu import suporte
-from defmenu import login
+from login import login
 from cadastro import *
 
 #Menu principal

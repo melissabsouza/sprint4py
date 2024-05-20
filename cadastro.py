@@ -65,6 +65,20 @@ def read_by_email(email_cadastro):
         cursor.close()
         conn.close()
 
+def read_by_country(pais_cadastro):
+    conn, cursor = create_oracle_connection()
+    try:
+        query = "SELECT * FROM TB_RDC_CADASTRO WHERE pais_cadastro = :pais_cadastro"
+        cursor.execute(query, {'pais_cadastro': pais_cadastro})
+        results = cursor.fetchall()
+        columns = [col[0] for col in cursor.description]
+
+        return [dict(zip(columns, row)) for row in results]
+    except oracledb.DatabaseError as e:
+        print(f"Erro na consulta: {e}")
+    finally:
+        cursor.close()
+        conn.close()
 
 
 def update_cadastro(email_cadastro, updates):
@@ -106,9 +120,10 @@ def cadastro():
         print(
             "1 - Criar Cadastro\n"
             +"2 - Mostrar Cadastro por email\n"
-            +"3 - Excluir Cadastro\n"
-            +"4 - Atualizar cadastro\n"
-            +"5 - Sair"
+            +"3 - Mostrar Cadastros por país\n"
+            +"4 - Excluir Cadastro\n"
+            +"5 - Atualizar cadastro\n"
+            +"6 - Sair"
  
         )
 
@@ -122,6 +137,11 @@ def cadastro():
                 if resultado_email:
                     export_json(resultado_email, 'resultado_email.json')
             case "3":
+                pais_cadastro = input("Digite o país para filtrar: ")
+                resultado_pais = read_by_country(pais_cadastro)
+                if resultado_pais:
+                    export_json(resultado_pais, 'resultado_pais.json')
+            case "4":
                 email_cadastro = input("Digite o email exclusão de cadastro: ")
                 resultado_email = read_by_email(email_cadastro)
                 if resultado_email:
@@ -131,7 +151,7 @@ def cadastro():
                         delete_cadastro(email_cadastro)
                 else:
                     print("Cadastro não encontrado")
-            case "4":
+            case "5":
                 email_cadastro = input("Digite o email que você deseja atualizar ")
                 resultado_email = read_by_email(email_cadastro)
                 if resultado_email:
@@ -161,7 +181,7 @@ def cadastro():
                             update_cadastro(email_cadastro, updates)
                     else:
                         print("Nenhum registro encontrado.")
-            case "5":
+            case "6":
                 print("Voltando!")
                 break
             case _:

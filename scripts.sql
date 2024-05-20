@@ -1,5 +1,5 @@
 CREATE TABLE TB_RDC_CADASTRO(
-    id NUMBER PRIMARY KEY,
+    id_cadastro NUMBER PRIMARY KEY,
     cnpj number,
     nm_cadastro varchar(200),
     sobrenome_cadastro varchar(200),
@@ -20,7 +20,7 @@ CREATE OR REPLACE TRIGGER trg_cadastro_id
 BEFORE INSERT ON TB_RDC_CADASTRO
 FOR EACH ROW
 BEGIN
-    :new.id := cadastro_seq.NEXTVAL;
+    :new.id_cadastro := cadastro_seq.NEXTVAL;
 END;
 /
 
@@ -31,7 +31,7 @@ CREATE TABLE T_RDC_LOGIN(
     senha_login VARCHAR2(200),
     status_login CHAR(2) CHECK(status_login in ('A', 'I')),
     id_cadastro NUMBER,
-    CONSTRAINT fk_login_cadastro FOREIGN KEY (id_cadastro) REFERENCES T_RDC_CADASTRO(id_cadastro)
+    CONSTRAINT fk_login_cadastro FOREIGN KEY (id_cadastro) REFERENCES TB_RDC_CADASTRO(id_cadastro)
 );
 
 CREATE TABLE T_RDC_INFO_EMP_CLIENTE(
@@ -42,7 +42,7 @@ CREATE TABLE T_RDC_INFO_EMP_CLIENTE(
     num_info_emp NUMBER,
     ramo_info_emp VARCHAR2(200),
     id_cadastro NUMBER,
-    CONSTRAINT fk_info_cadastro FOREIGN KEY (id_cadastro) REFERENCES T_RDC_CADASTRO(id_cadastro)
+    CONSTRAINT fk_info_cadastro FOREIGN KEY (id_cadastro) REFERENCES TB_RDC_CADASTRO(id_cadastro)
 );
 
 
