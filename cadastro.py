@@ -1,10 +1,11 @@
 from oracle_connector import *
-
+from validador import *
 #id está com auto-increment no DB
 def create_cadastro():
     conn, cursor = create_oracle_connection()
     
     try:
+        
         print("Criando Cadastro...")
         cnpj = input("Digite seu cnpj: ")
         nm_cadastro = input("Digite seu nome: ")
@@ -17,26 +18,31 @@ def create_cadastro():
         pais_cadastro = input("Digite o país que você está localizado: ")
         idioma_cadastro = input("Digite seu idioma: ")
         
-        query = """
-        INSERT INTO TB_RDC_CADASTRO 
-        (cnpj, nm_cadastro, sobrenome_cadastro, cargo_cadastro, email_cadastro, telefone_cadastro, nm_empresa_cadastro, tam_empresa, pais_cadastro, idioma_cadastro) 
-        VALUES (:cnpj, :nm_cadastro, :sobrenome_cadastro, :cargo_cadastro, :email_cadastro, :telefone_cadastro, :nm_empresa_cadastro, :tam_empresa, :pais_cadastro, :idioma_cadastro)
-        """
+        validador = validador_email(email_cadastro)
         
-        cursor.execute(query, {
-            'cnpj': cnpj, 
-            'nm_cadastro': nm_cadastro, 
-            'sobrenome_cadastro': sobrenome_cadastro, 
-            'cargo_cadastro': cargo_cadastro, 
-            'email_cadastro': email_cadastro, 
-            'telefone_cadastro': telefone_cadastro, 
-            'nm_empresa_cadastro': nm_empresa_cadastro, 
-            'tam_empresa': tam_empresa, 
-            'pais_cadastro': pais_cadastro, 
-            'idioma_cadastro': idioma_cadastro
-        })
-        conn.commit()
-        print("Cadastro criado com sucesso!")
+        if validador == True:
+            query = """
+            INSERT INTO TB_RDC_CADASTRO 
+            (cnpj, nm_cadastro, sobrenome_cadastro, cargo_cadastro, email_cadastro, telefone_cadastro, nm_empresa_cadastro, tam_empresa, pais_cadastro, idioma_cadastro) 
+            VALUES (:cnpj, :nm_cadastro, :sobrenome_cadastro, :cargo_cadastro, :email_cadastro, :telefone_cadastro, :nm_empresa_cadastro, :tam_empresa, :pais_cadastro, :idioma_cadastro)
+            """
+        
+            cursor.execute(query, {
+                'cnpj': cnpj, 
+                'nm_cadastro': nm_cadastro, 
+                'sobrenome_cadastro': sobrenome_cadastro, 
+                'cargo_cadastro': cargo_cadastro, 
+                'email_cadastro': email_cadastro, 
+                'telefone_cadastro': telefone_cadastro, 
+                'nm_empresa_cadastro': nm_empresa_cadastro, 
+                'tam_empresa': tam_empresa, 
+                'pais_cadastro': pais_cadastro, 
+                'idioma_cadastro': idioma_cadastro
+            })
+            conn.commit()
+            print("Cadastro criado com sucesso!")
+        else:
+            print("Email inválido")
     except oracledb.DatabaseError as e:
         print(f"Erro ao criar cadastro: {e}")
     finally:
